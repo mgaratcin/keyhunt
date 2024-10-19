@@ -6687,3 +6687,40 @@ void calcualteindex(int i,Int *key)	{
 		key->Add(&BSGS_M3);
 	}
 }
+
+
+// Added configuration for kangaroo algorithm
+int enable_kangaroo = 0;
+int kangaroo_threads = 2;
+
+// Function to initialize kangaroo threads
+void* start_kangaroo_thread(void* arg) {
+    (void)arg; // Prevent unused parameter warning
+    // Placeholder for actual kangaroo algorithm implementation
+    printf("Starting kangaroo thread\n");
+    return NULL;
+}
+
+void initialize_kangaroo_threads() {
+    if (enable_kangaroo) {
+        pthread_t kangaroo_tid[kangaroo_threads];
+        for (int i = 0; i < kangaroo_threads; ++i) {
+            pthread_create(&kangaroo_tid[i], NULL, start_kangaroo_thread, NULL);
+        }
+        // Join kangaroo threads
+        for (int i = 0; i < kangaroo_threads; ++i) {
+            pthread_join(kangaroo_tid[i], NULL);
+        }
+    }
+}
+
+// Example command line argument parsing for enabling kangaroo algorithm
+void parse_arguments(int argc, char** argv) {
+    for (int i = 1; i < argc; i++) {
+        if (strcmp(argv[i], "--enable-kangaroo") == 0) {
+            enable_kangaroo = 1;
+        } else if (strcmp(argv[i], "--kangaroo-threads") == 0 && i + 1 < argc) {
+            kangaroo_threads = atoi(argv[++i]);
+        }
+    }
+}
