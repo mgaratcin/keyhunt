@@ -59,3 +59,12 @@ bsgsd:
 	g++ -m64 -march=native -mtune=native -mssse3 -Wall -Wextra -Wno-deprecated-copy -Ofast -o hash/sha256_sse.o -ftree-vectorize -flto -c hash/sha256_sse.cpp
 	g++ -m64 -march=native -mtune=native -mssse3 -Wall -Wextra -Wno-deprecated-copy -Ofast -ftree-vectorize -o bsgsd bsgsd.cpp base58.o rmd160.o hash/ripemd160.o hash/ripemd160_sse.o hash/sha256.o hash/sha256_sse.o bloom.o oldbloom.o xxhash.o util.o Int.o  Point.o SECP256K1.o  IntMod.o  Random.o IntGroup.o sha3.o keccak.o  -lm -lpthread
 	rm -r *.o
+
+
+# Add kangaroo object
+kangaroo.o: kangaroo.cpp kangaroo.h
+	g++ -c kangaroo.cpp -o kangaroo.o
+
+# Link kangaroo.o with the main executable
+keyhunt: keyhunt.o kangaroo.o
+	g++ keyhunt.o kangaroo.o -o keyhunt -lpthread
