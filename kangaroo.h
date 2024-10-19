@@ -1,15 +1,34 @@
+// kangaroo.h
 #ifndef KANGAROO_H
 #define KANGAROO_H
 
-#include <stdint.h>
+#include <vector>
+#include <thread>
+#include <mutex>
+#include "secp256k1/Point.h"
 
-// Struct to represent a kangaroo position in the search
-typedef struct {
-    uint64_t position;
-    uint64_t value;
-} Kangaroo;
+// Forward declaration to integrate elliptic curve functions from keyhunt.cpp
+namespace Keyhunt {
+    extern Point AddDirect(const Point& p1, const Point& p2);
+}
 
-// Function to run the Pollard's kangaroo algorithm
-void kangaroo_algorithm(uint64_t start, uint64_t end, uint64_t target);
+class Kangaroo {
+public:
+    Kangaroo();
+    ~Kangaroo();
+
+    void setupKangaroo(int thread_id, Point start_point);
+    void run();
+    static void kangarooThread(Kangaroo* instance, int thread_id);
+
+private:
+    int thread_id;
+    Point position;
+    std::vector<Point> random_steps;
+    std::mutex position_mutex;
+
+    void fetchGiantSteps(int batch_size);
+    void makeJump();
+};
 
 #endif // KANGAROO_H
