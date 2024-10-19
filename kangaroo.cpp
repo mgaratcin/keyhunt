@@ -1,41 +1,61 @@
-#include <stdio.h>
-#include <stdlib.h>
+// kangaroo.cpp
 #include "kangaroo.h"
+#include "keyhunt.h" // Includes Keyhunt's cryptographic functions
 
-// Simple modular arithmetic for stepping
-#define MODULUS 0xFFFFFFFFFFFFFFFFULL
+#include <iostream>
+#include <chrono>
 
-// Example step function for kangaroo jumps
-static uint64_t step(uint64_t value) {
-    return (value * value + 1) % MODULUS;
+Kangaroo::Kangaroo() : thread_id(0) {
 }
 
-void kangaroo_algorithm(uint64_t start, uint64_t end, uint64_t target) {
-    // Initialize tame kangaroo starting at known point
-    Kangaroo tame = { .position = start, .value = start };
-    // Wild kangaroo starts at a random position between start and end
-    Kangaroo wild = { .position = rand() % (end - start) + start, .value = wild.position };
+Kangaroo::~Kangaroo() {
+}
 
-    // Jumping loop
-    while (tame.value != target && wild.value != target) {
-        // Tame kangaroo jumps
-        tame.position += step(tame.value);
-        tame.value = (tame.value + tame.position) % MODULUS;
+void Kangaroo::setupKangaroo(int id, Point start_point) {
+    thread_id = id;
+    position = start_point;
+}
 
-        // Wild kangaroo jumps
-        wild.position += step(wild.value);
-        wild.value = (wild.value + wild.position) % MODULUS;
+void Kangaroo::fetchGiantSteps(int batch_size) {
+    // Fetch a batch of random giant steps using elliptic curve points
+    random_steps.clear();
+    for (int i = 0; i < batch_size; ++i) {
+        // Generate random point (as an example, use AddDirect with different points)
+        Point random_step = Keyhunt::AddDirect(position, position); // Double the position as a simple step
+        random_steps.push_back(random_step);
+    }
+}
 
-        // Check if they land on the same position (collision)
-        if (tame.position == wild.position) {
-            printf("Collision detected! Potential match at position: %llu\n", tame.position);
-            break;
-        }
+void Kangaroo::makeJump() {
+    // Perform a jump using one of the random steps
+    std::lock_guard<std::mutex> lock(position_mutex);
+    if (!random_steps.empty()) {
+        position = Keyhunt::AddDirect(position, random_steps.back());
+        random_steps.pop_back();
+    }
+}
+
+void Kangaroo::kangarooThread(Kangaroo* instance, int thread_id) {
+    // Set up the kangaroo with an initial elliptic curve point (start position)
+    Point start_point; // Define a proper starting point based on the application
+    instance->setupKangaroo(thread_id, start_point);
+    instance->fetchGiantSteps(1024); // Fetch 1,024 steps
+
+    for (int i = 0; i < 1024; ++i) {
+        instance->makeJump();
+        // Optional: Add some delay or condition to check for solution
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
 
-    if (tame.value == target || wild.value == target) {
-        printf("Target found at position: %llu\n", (tame.value == target) ? tame.position : wild.position);
-    } else {
-        printf("Failed to find the target within the given range.\n");
-    }
+    std::cout << "Thread " << thread_id << " finished at position: " << instance->position.ToString() << std::endl;
+}
+
+void Kangaroo::run() {
+    // Create two threads for the kangaroo algorithm
+    std::thread kangaroo1(Kangaroo::kangarooThread, this, 1);
+    std::thread kangaroo2(Kangaroo::kangarooThread, this, 2);
+
+    // Join threads to the main thread
+    kangaroo1.join();
+    kangaroo2.join();
 }
