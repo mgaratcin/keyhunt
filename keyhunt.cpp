@@ -3941,7 +3941,7 @@ pn.y.ModAdd(&GSn[i].y);
 							r = bsgs_secondcheck(&base_key,((j*1024) + i),k,&keyfound);
 							if(r)	{
 								hextemp = keyfound.GetBase16();
-								printf("[+] Thread Key found privkey %s   \n",hextemp);
+								printf("[+] Thread Key Found PrivKey %s   \n",hextemp);
 								point_found = secp->ComputePublicKey(&keyfound);
 								aux_c = secp->GetPublicKeyHex(OriginalPointsBSGScompressed[k],point_found);
 								printf("[+] Publickey %s\n",aux_c);
