@@ -1,3 +1,4 @@
+bool kangaroo_initialized = false; // Define the global variable
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
