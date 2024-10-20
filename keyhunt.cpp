@@ -4219,7 +4219,7 @@ pn.y.ModAdd(&GSn[i].y);
 									salir &= bsgs_found[l];
 								}
 								if(salir)	{
-									printf("All points were found\n");
+									printf("All Points Were Found!\n");
 									exit(EXIT_FAILURE);
 								}
 							} //End if second check
@@ -5024,7 +5024,7 @@ pn.y.ModAdd(&GSn[i].y);
 									salir &= bsgs_found[l];
 								}
 								if(salir)	{
-									printf("All points were found\n");
+									printf("All Points Were Found\n");
 									exit(EXIT_FAILURE);
 								}
 							} //End if second check
@@ -5282,7 +5282,7 @@ pn.y.ModAdd(&GSn[i].y);
 									salir &= bsgs_found[l];
 								}
 								if(salir)	{
-									printf("All points were found\n");
+									printf("All Points Were Found\n");
 									exit(EXIT_FAILURE);
 								}
 							} //End if second check
@@ -5566,7 +5566,7 @@ void *thread_process_bsgs_both(void *vargp)	{
 										salir &= bsgs_found[l];
 									}
 									if(salir)	{
-										printf("All points were found\n");
+										printf("All Points Were Found\n");
 										exit(EXIT_FAILURE);
 									}
 								} //End if second check
