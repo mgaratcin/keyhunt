@@ -664,7 +664,7 @@ int main(int argc, char **argv)	{
 				printf("[+] Quiet thread output\n");
 			break;
 			case 'R':
-				printf("[+] Random mode\n");
+				printf("[+] Random Mode\n");
 				FLAGRANDOM = 1;
 				FLAGBSGSMODE =  3;
 			break;
