@@ -6,6 +6,8 @@
 #include "hashing.h"
 #include "sha3/sha3.h"
 
+/Review hashing.c File/
+
 int sha256(const unsigned char *data, size_t length, unsigned char *digest) {
     SHA256_CTX ctx;
     if (SHA256_Init(&ctx) != 1) {
