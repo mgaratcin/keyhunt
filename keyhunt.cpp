@@ -477,7 +477,7 @@ int main(int argc, char **argv)	{
 		rseed(clock() + time(NULL) + rand()*rand());
 	}
 #endif
-	printf("[+] KangHunt, Version 1.92, by MGaratcin. Initializing Kangaroos.\n");
+	printf("[+] KangHunt, Version 1.93, by MGaratcin. Initializing Kangaroos.\n");
 	
 	while ((c = getopt(argc, argv, "deh6MqRSB:b:c:C:E:f:I:k:l:m:N:n:p:r:s:t:v:G:8:z:")) != -1) {
 		switch(c) {
@@ -1088,12 +1088,12 @@ int main(int argc, char **argv)	{
 				n_range_diff.Sub(&n_range_start);
 				printf("[+] Bit Range %i\n",bitrange);
 				printf("[+] -- From : 0x%s\n",bit_range_str_min);
-				printf("[+] -- to   : 0x%s\n",bit_range_str_max);
+				printf("[+] -- To   : 0x%s\n",bit_range_str_max);
 			}
 			else	{
 				printf("[+] Range \n");
 				printf("[+] -- From : 0x%s\n",range_start);
-				printf("[+] -- to   : 0x%s\n",range_end);
+				printf("[+] -- To   : 0x%s\n",range_end);
 			}
 		}
 		else	{	//Random start
