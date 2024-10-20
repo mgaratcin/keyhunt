@@ -1205,7 +1205,7 @@ int main(int argc, char **argv)	{
 			itemsbloom3 = 1000;
 		}
 		
-		printf("[+] Bloom Filter for %" PRIu64 " elements ",bsgs_m);
+		printf("[+] Bloom Filter for %" PRIu64 " Elements ",bsgs_m);
 		bloom_bP = (struct bloom*)calloc(256,sizeof(struct bloom));
 		checkpointer((void *)bloom_bP,__FILE__,"calloc","bloom_bP" ,__LINE__ -1 );
 		bloom_bP_checksums = (struct checksumsha256*)calloc(256,sizeof(struct checksumsha256));
@@ -1238,7 +1238,7 @@ int main(int argc, char **argv)	{
 		printf(": %.2f MB\n",(float)((float)(uint64_t)bloom_bP_totalbytes/(float)(uint64_t)1048576));
 
 
-		printf("[+] Bloom Filter for %" PRIu64 " elements ",bsgs_m2);
+		printf("[+] Bloom Filter for %" PRIu64 " Elements ",bsgs_m2);
 		
 #if defined(_WIN64) && !defined(__CYGWIN__)
 		bloom_bPx2nd_mutex = (HANDLE*) calloc(256,sizeof(HANDLE));
@@ -1278,7 +1278,7 @@ int main(int argc, char **argv)	{
 		bloom_bPx3rd_checksums = (struct checksumsha256*) calloc(256,sizeof(struct checksumsha256));
 		checkpointer((void *)bloom_bPx3rd_checksums,__FILE__,"calloc","bloom_bPx3rd_checksums" ,__LINE__ -1 );
 		
-		printf("[+] Bloom Filter for %" PRIu64 " elements ",bsgs_m3);
+		printf("[+] Bloom Filter for %" PRIu64 " Elements ",bsgs_m3);
 		bloom_bP3_totalbytes = 0;
 		for(i=0; i< 256; i++)	{
 #if defined(_WIN64) && !defined(__CYGWIN__)
@@ -1863,7 +1863,7 @@ int main(int argc, char **argv)	{
 			fflush(stdout);
 		}	
 		if(!FLAGREADEDFILE3)	{
-			printf("[+] Sorting %lu elements... ",bsgs_m3);
+			printf("[+] Sorting %lu Elements... ",bsgs_m3);
 			fflush(stdout);
 			bsgs_sort(bPtable,bsgs_m3);
 			sha256((uint8_t*)bPtable, bytes,(uint8_t*) checksum);
@@ -6170,7 +6170,7 @@ bool readFileAddress(char *fileName)	{
 				return false;
 			}
 			
-			printf("[+] Bloom filter for %" PRIu64 " elements.\n",bloom.entries);
+			printf("[+] Bloom filter for %" PRIu64 " Elements.\n",bloom.entries);
 			
 			bloom.bf = (uint8_t*) malloc(bloom.bytes);
 			if(bloom.bf == NULL)	{
@@ -6230,7 +6230,7 @@ bool readFileAddress(char *fileName)	{
 			}
 			N = dataSize / sizeof(struct address_value);
 	
-			printf("[+] Allocating memory for %" PRIu64 " elements: %.2f MB\n",N,(double)(((double) sizeof(struct address_value)*N)/(double)1048576));
+			printf("[+] Allocating memory for %" PRIu64 " Elements: %.2f MB\n",N,(double)(((double) sizeof(struct address_value)*N)/(double)1048576));
 			
 			addressTable = (struct address_value*) malloc(dataSize);
 			if(addressTable == NULL)	{
@@ -6320,7 +6320,7 @@ bool forceReadFileAddress(char *fileName)	{
 	fseek(fileDescriptor,0,SEEK_SET);
 	MAXLENGTHADDRESS = 20;		/*20 bytes beacuase we only need the data in binary*/
 	
-	printf("[+] Allocating memory for %" PRIu64 " elements: %.2f MB\n",numberItems,(double)(((double) sizeof(struct address_value)*numberItems)/(double)1048576));
+	printf("[+] Allocating memory for %" PRIu64 " Elements: %.2f MB\n",numberItems,(double)(((double) sizeof(struct address_value)*numberItems)/(double)1048576));
 	addressTable = (struct address_value*) malloc(sizeof(struct address_value)*numberItems);
 	checkpointer((void *)addressTable,__FILE__,"malloc","addressTable" ,__LINE__ -1 );
 		
@@ -6394,7 +6394,7 @@ bool forceReadFileAddressEth(char *fileName)	{
 	MAXLENGTHADDRESS = 20;		/*20 bytes beacuase we only need the data in binary*/
 	N = numberItems;
 	
-	printf("[+] Allocating memory for %" PRIu64 " elements: %.2f MB\n",numberItems,(double)(((double) sizeof(struct address_value)*numberItems)/(double)1048576));
+	printf("[+] Allocating memory for %" PRIu64 " Elements: %.2f MB\n",numberItems,(double)(((double) sizeof(struct address_value)*numberItems)/(double)1048576));
 	addressTable = (struct address_value*) malloc(sizeof(struct address_value)*numberItems);
 	checkpointer((void *)addressTable,__FILE__,"malloc","addressTable" ,__LINE__ -1 );
 	
@@ -6473,7 +6473,7 @@ bool forceReadFileXPoint(char *fileName)	{
 
 	MAXLENGTHADDRESS = 20;		/*20 bytes beacuase we only need the data in binary*/
 	
-	printf("[+] Allocating memory for %" PRIu64 " elements: %.2f MB\n",numberItems,(double)(((double) sizeof(struct address_value)*numberItems)/(double)1048576));
+	printf("[+] Allocating memory for %" PRIu64 " Elements: %.2f MB\n",numberItems,(double)(((double) sizeof(struct address_value)*numberItems)/(double)1048576));
 	addressTable = (struct address_value*) malloc(sizeof(struct address_value)*numberItems);
 	checkpointer((void *)addressTable,__FILE__,"malloc","addressTable" ,__LINE__ - 1);
 	
@@ -6551,16 +6551,16 @@ bool forceReadFileXPoint(char *fileName)	{
 
 bool initBloomFilter(struct bloom *bloom_arg,uint64_t items_bloom)	{
 	bool r = true;
-	printf("[+] Bloom filter for %" PRIu64 " elements.\n",items_bloom);
+	printf("[+] Bloom filter for %" PRIu64 " Elements.\n",items_bloom);
 	if(items_bloom <= 10000)	{
 		if(bloom_init2(bloom_arg,10000,0.000001) == 1){
-			fprintf(stderr,"[E] error bloom_init for 10000 elements.\n");
+			fprintf(stderr,"[E] error bloom_init for 10000 Elements.\n");
 			r = false;
 		}
 	}
 	else	{
 		if(bloom_init2(bloom_arg,FLAGBLOOMMULTIPLIER*items_bloom,0.000001)	== 1){
-			fprintf(stderr,"[E] error bloom_init for %" PRIu64 " elements.\n",items_bloom);
+			fprintf(stderr,"[E] error bloom_init for %" PRIu64 " Elements.\n",items_bloom);
 			r = false;
 		}
 	}
