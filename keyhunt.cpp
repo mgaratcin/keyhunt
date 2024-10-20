@@ -6755,6 +6755,8 @@ void set_target_key() {
     targetX = extract_x_from_pubkey(pubkey);
 }
 
+extern bool kangaroo_initialized; // Use the global variable
+
 // Function to initialize kangaroos for a thread
 void initialize_kangaroos(std::vector<Kangaroo>& kangaroos, Int& initialXValue, Int& initialYValue, int rangePower) {
     for (int i = 0; i < KANGAROOS_PER_THREAD; ++i) {
@@ -6766,6 +6768,10 @@ void initialize_kangaroos(std::vector<Kangaroo>& kangaroos, Int& initialXValue, 
         kangaroo.y.Set(&initialYValue);
         kangaroos.push_back(kangaroo);
     }
+
+    // Set kangaroo_initialized to true after initializing the kangaroos
+    kangaroo_initialized = true;
+    printf("Kangaroos have been initialized.\n"); // Print a message confirming initialization
 }
 
 // Function for kangaroo jumping logic
