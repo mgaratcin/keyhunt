@@ -1,8 +1,6 @@
 #ifndef HASHSING
 #define HASHSING
 
-/Review hashing.h File/
-
 int sha256(const unsigned char *data, size_t length, unsigned char *digest);
 int rmd160(const unsigned char *data, size_t length, unsigned char *digest);
 int keccak(const unsigned char *data, size_t length, unsigned char *digest);
