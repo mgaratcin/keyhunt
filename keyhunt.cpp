@@ -953,7 +953,7 @@ int main(int argc, char **argv)	{
 	}
 	
 	if(FLAGMODE == MODE_BSGS )	{
-		printf("[+] Opening file %s\n",fileName);
+		printf("[+] Opening File %s\n",fileName);
 		fd = fopen(fileName,"rb");
 		if(fd == NULL)	{
 			fprintf(stderr,"[E] Can't open file %s\n",fileName);
