@@ -1036,8 +1036,7 @@ int main(int argc, char **argv)	{
 		fclose(fd);
 		bsgs_point_number = N;
 		if(bsgs_point_number > 0)	{
-			printf("[+] Added %u points from file\n",bsgs_point_number)
-			printf("[+] Kangaroos Initialized at 1,024 Wild Per Thread\n");
+			printf("[+] Added %u points from file\n",bsgs_point_number);
 		}
 		else	{
 			fprintf(stderr,"[E] The file don't have any valid publickeys\n");
