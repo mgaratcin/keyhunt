@@ -919,7 +919,7 @@ int main(int argc, char **argv)	{
 		}
 		if(FLAGMODE != MODE_MINIKEYS)	{
 			hextemp = n_range_start.GetBase16();
-			printf("[+] -- from : 0x%s\n",hextemp);
+			printf("[+] -- From : 0x%s\n",hextemp);
 			free(hextemp);
 			hextemp = n_range_end.GetBase16();
 			printf("[+] -- to   : 0x%s\n",hextemp);
