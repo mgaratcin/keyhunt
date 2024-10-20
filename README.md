@@ -1,5 +1,5 @@
 On Debian based systems, run this commands to update your current enviroment
-and install the tools needed to compile it
+and install the tools needed to compile it 
 
 ```
 apt update && apt upgrade
