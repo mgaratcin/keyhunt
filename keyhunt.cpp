@@ -354,7 +354,7 @@ pthread_mutex_t *bloom_bPx3rd_mutex;
 uint64_t bloom_bP_totalbytes = 0;
 uint64_t bloom_bP2_totalbytes = 0;
 uint64_t bloom_bP3_totalbytes = 0;
-uint64_t bsgs_m = 4194304;
+uint64_t bsgs_m = 25165824;
 uint64_t bsgs_m2;
 uint64_t bsgs_m3;
 uint64_t bsgs_aux;
