@@ -220,7 +220,7 @@ int THREADOUTPUT = 0;
 char *bit_range_str_min;
 char *bit_range_str_max;
 
-const char *bsgs_modes[5] = {"sequential","backward","both","random","dance"};
+const char *bsgs_modes[5] = {"Sequential","Backward","both","Random","Dance"};
 const char *modes[7] = {"xpoint","address","bsgs","rmd160","pub2rmd","minikeys","vanity"};
 const char *cryptos[3] = {"btc","eth","all"};
 const char *publicsearch[3] = {"uncompress","compress","both"};
