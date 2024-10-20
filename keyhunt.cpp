@@ -922,7 +922,7 @@ int main(int argc, char **argv)	{
 			printf("[+] -- From : 0x%s\n",hextemp);
 			free(hextemp);
 			hextemp = n_range_end.GetBase16();
-			printf("[+] -- to   : 0x%s\n",hextemp);
+			printf("[+] -- To   : 0x%s\n",hextemp);
 			free(hextemp);
 		}
 
