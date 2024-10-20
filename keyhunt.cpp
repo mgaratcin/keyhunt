@@ -1205,7 +1205,7 @@ int main(int argc, char **argv)	{
 			itemsbloom3 = 1000;
 		}
 		
-		printf("[+] Bloom filter for %" PRIu64 " elements ",bsgs_m);
+		printf("[+] Bloom Filter for %" PRIu64 " elements ",bsgs_m);
 		bloom_bP = (struct bloom*)calloc(256,sizeof(struct bloom));
 		checkpointer((void *)bloom_bP,__FILE__,"calloc","bloom_bP" ,__LINE__ -1 );
 		bloom_bP_checksums = (struct checksumsha256*)calloc(256,sizeof(struct checksumsha256));
@@ -1238,7 +1238,7 @@ int main(int argc, char **argv)	{
 		printf(": %.2f MB\n",(float)((float)(uint64_t)bloom_bP_totalbytes/(float)(uint64_t)1048576));
 
 
-		printf("[+] Bloom filter for %" PRIu64 " elements ",bsgs_m2);
+		printf("[+] Bloom Filter for %" PRIu64 " elements ",bsgs_m2);
 		
 #if defined(_WIN64) && !defined(__CYGWIN__)
 		bloom_bPx2nd_mutex = (HANDLE*) calloc(256,sizeof(HANDLE));
@@ -1278,7 +1278,7 @@ int main(int argc, char **argv)	{
 		bloom_bPx3rd_checksums = (struct checksumsha256*) calloc(256,sizeof(struct checksumsha256));
 		checkpointer((void *)bloom_bPx3rd_checksums,__FILE__,"calloc","bloom_bPx3rd_checksums" ,__LINE__ -1 );
 		
-		printf("[+] Bloom filter for %" PRIu64 " elements ",bsgs_m3);
+		printf("[+] Bloom Filter for %" PRIu64 " elements ",bsgs_m3);
 		bloom_bP3_totalbytes = 0;
 		for(i=0; i< 256; i++)	{
 #if defined(_WIN64) && !defined(__CYGWIN__)
