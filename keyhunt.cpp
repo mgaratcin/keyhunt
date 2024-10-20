@@ -360,7 +360,7 @@ uint64_t bsgs_m3;
 uint64_t bsgs_aux;
 uint32_t bsgs_point_number;
 
-const char *str_limits_prefixs[7] = {"Mkeys/s","Gkeys/s","Tkeys/s","Pkeys/s","Ekeys/s","Zkeys/s","Ykeys/s"};
+const char *str_limits_prefixs[7] = {"Megakeys/s","Gigakeys/s","Terakeys/s","Pettakeys/s","Exakeys/s","Zettakeys/s","Yettakeys/s"};
 const char *str_limits[7] = {"1000000","1000000000","1000000000000","1000000000000000","1000000000000000000","1000000000000000000000","1000000000000000000000000"};
 Int int_limits[7];
 
