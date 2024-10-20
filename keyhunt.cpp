@@ -1087,12 +1087,12 @@ int main(int argc, char **argv)	{
 				n_range_diff.Set(&n_range_end);
 				n_range_diff.Sub(&n_range_start);
 				printf("[+] Bit Range %i\n",bitrange);
-				printf("[+] -- from : 0x%s\n",bit_range_str_min);
+				printf("[+] -- From : 0x%s\n",bit_range_str_min);
 				printf("[+] -- to   : 0x%s\n",bit_range_str_max);
 			}
 			else	{
 				printf("[+] Range \n");
-				printf("[+] -- from : 0x%s\n",range_start);
+				printf("[+] -- From : 0x%s\n",range_start);
 				printf("[+] -- to   : 0x%s\n",range_end);
 			}
 		}
