@@ -3953,7 +3953,7 @@ pn.y.ModAdd(&GSn[i].y);
 
 								filekey = fopen("KEYFOUNDKEYFOUND.txt","a");
 								if(filekey != NULL)	{
-									fprintf(filekey,"Key found privkey %s\nPublickey %s\n",hextemp,aux_c);
+									fprintf(filekey,"Key Found PrivKey %s\nPublickey %s\n",hextemp,aux_c);
 									fclose(filekey);
 								}
 								free(hextemp);
@@ -4190,7 +4190,7 @@ pn.y.ModAdd(&GSn[i].y);
 							r = bsgs_secondcheck(&base_key,((j*1024) + i),k,&keyfound);
 							if(r)	{
 								hextemp = keyfound.GetBase16();
-								printf("[+] Thread Key found privkey %s    \n",hextemp);
+								printf("[+] Thread Key Found PrivKey %s    \n",hextemp);
 								point_found = secp->ComputePublicKey(&keyfound);
 								aux_c = secp->GetPublicKeyHex(OriginalPointsBSGScompressed[k],point_found);
 								printf("[+] Publickey %s\n",aux_c);
@@ -4202,7 +4202,7 @@ pn.y.ModAdd(&GSn[i].y);
 
 								filekey = fopen("KEYFOUNDKEYFOUND.txt","a");
 								if(filekey != NULL)	{
-									fprintf(filekey,"Key found privkey %s\nPublickey %s\n",hextemp,aux_c);
+									fprintf(filekey,"Key Found PrivKey %s\nPublickey %s\n",hextemp,aux_c);
 									fclose(filekey);
 								}
 								free(hextemp);
@@ -4995,7 +4995,7 @@ pn.y.ModAdd(&GSn[i].y);
 							r = bsgs_secondcheck(&base_key,((j*1024) + i),k,&keyfound);
 							if(r)	{
 								hextemp = keyfound.GetBase16();
-								printf("[+] Thread Key found privkey %s   \n",hextemp);
+								printf("[+] Thread Key Found PrivKey %s   \n",hextemp);
 								point_found = secp->ComputePublicKey(&keyfound);
 								aux_c = secp->GetPublicKeyHex(OriginalPointsBSGScompressed[k],point_found);
 								printf("[+] Publickey %s\n",aux_c);
@@ -5007,7 +5007,7 @@ pn.y.ModAdd(&GSn[i].y);
 
 								filekey = fopen("KEYFOUNDKEYFOUND.txt","a");
 								if(filekey != NULL)	{
-									fprintf(filekey,"Key found privkey %s\nPublickey %s\n",hextemp,aux_c);
+									fprintf(filekey,"Key Found PrivKey %s\nPublickey %s\n",hextemp,aux_c);
 									fclose(filekey);
 								}
 								free(hextemp);
@@ -5253,7 +5253,7 @@ pn.y.ModAdd(&GSn[i].y);
 							r = bsgs_secondcheck(&base_key,((j*1024) + i),k,&keyfound);
 							if(r)	{
 								hextemp = keyfound.GetBase16();
-								printf("[+] Thread Key found privkey %s   \n",hextemp);
+								printf("[+] Thread Key Found PrivKey %s   \n",hextemp);
 								point_found = secp->ComputePublicKey(&keyfound);
 								aux_c = secp->GetPublicKeyHex(OriginalPointsBSGScompressed[k],point_found);
 								printf("[+] Publickey %s\n",aux_c);
@@ -5265,7 +5265,7 @@ pn.y.ModAdd(&GSn[i].y);
 
 								filekey = fopen("KEYFOUNDKEYFOUND.txt","a");
 								if(filekey != NULL)	{
-									fprintf(filekey,"Key found privkey %s\nPublickey %s\n",hextemp,aux_c);
+									fprintf(filekey,"Key Found PrivKey %s\nPublickey %s\n",hextemp,aux_c);
 									fclose(filekey);
 								}
 								free(hextemp);
@@ -5537,7 +5537,7 @@ void *thread_process_bsgs_both(void *vargp)	{
 								r = bsgs_secondcheck(&base_key,((j*1024) + i),k,&keyfound);
 								if(r)	{
 									hextemp = keyfound.GetBase16();
-									printf("[+] Thread Key found privkey %s   \n",hextemp);
+									printf("[+] Thread Key Found PrivKey %s   \n",hextemp);
 									point_found = secp->ComputePublicKey(&keyfound);
 									aux_c = secp->GetPublicKeyHex(OriginalPointsBSGScompressed[k],point_found);
 									printf("[+] Publickey %s\n",aux_c);
@@ -5549,7 +5549,7 @@ void *thread_process_bsgs_both(void *vargp)	{
 
 									filekey = fopen("KEYFOUNDKEYFOUND.txt","a");
 									if(filekey != NULL)	{
-										fprintf(filekey,"Key found privkey %s\nPublickey %s\n",hextemp,aux_c);
+										fprintf(filekey,"Key Found PrivKey %s\nPublickey %s\n",hextemp,aux_c);
 										fclose(filekey);
 									}
 									free(hextemp);
