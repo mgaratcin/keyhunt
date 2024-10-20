@@ -1,4 +1,4 @@
-bool kangaroo_initialized = false; // Define the global variable
+// bool kangaroo_initialized = false; // Define the global variable
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
@@ -477,7 +477,7 @@ int main(int argc, char **argv)	{
 		rseed(clock() + time(NULL) + rand()*rand());
 	}
 #endif
-	printf("[+] KangHunt, Version 2.10, by MGaratcin. Launching BSGS and Initializing Kangaroos.\n");
+// 	printf("[+] KangHunt, Version 2.10, by MGaratcin. Launching BSGS and Initializing Kangaroos.\n");
 	
 	while ((c = getopt(argc, argv, "deh6MqRSB:b:c:C:E:f:I:k:l:m:N:n:p:r:s:t:v:G:8:z:")) != -1) {
 		switch(c) {
@@ -6682,38 +6682,38 @@ void calcualteindex(int i,Int *key)	{
 }
 
 
-// Added configuration for kangaroo algorithm
-int enable_kangaroo = 0;
-int kangaroo_threads = 2;
+// // Added configuration for kangaroo algorithm
+// int enable_kangaroo = 0;
+// int kangaroo_threads = 2;
 
-// Function to initialize kangaroo threads
-void* start_kangaroo_thread(void* arg) {
+// // Function to initialize kangaroo threads
+// void* start_kangaroo_thread(void* arg) {
     (void)arg; // Prevent unused parameter warning
-    // Placeholder for actual kangaroo algorithm implementation
-    printf("Starting kangaroo thread\n");
+//     // Placeholder for actual kangaroo algorithm implementation
+//     printf("Starting kangaroo thread\n");
     return NULL;
 }
 
-void initialize_kangaroo_threads() {
-    if (enable_kangaroo) {
-        pthread_t kangaroo_tid[kangaroo_threads];
-        for (int i = 0; i < kangaroo_threads; ++i) {
-            pthread_create(&kangaroo_tid[i], NULL, start_kangaroo_thread, NULL);
+// void initialize_kangaroo_threads() {
+//     if (enable_kangaroo) {
+//         pthread_t kangaroo_tid[kangaroo_threads];
+//         for (int i = 0; i < kangaroo_threads; ++i) {
+//             pthread_create(&kangaroo_tid[i], NULL, start_kangaroo_thread, NULL);
         }
-        // Join kangaroo threads
-        for (int i = 0; i < kangaroo_threads; ++i) {
-            pthread_join(kangaroo_tid[i], NULL);
+//         // Join kangaroo threads
+//         for (int i = 0; i < kangaroo_threads; ++i) {
+//             pthread_join(kangaroo_tid[i], NULL);
         }
     }
 }
 
-// Example command line argument parsing for enabling kangaroo algorithm
+// // Example command line argument parsing for enabling kangaroo algorithm
 void parse_arguments(int argc, char** argv) {
     for (int i = 1; i < argc; i++) {
-        if (strcmp(argv[i], "--enable-kangaroo") == 0) {
-            enable_kangaroo = 1;
-        } else if (strcmp(argv[i], "--kangaroo-threads") == 0 && i + 1 < argc) {
-            kangaroo_threads = atoi(argv[++i]);
+//         if (strcmp(argv[i], "--enable-kangaroo") == 0) {
+//             enable_kangaroo = 1;
+//         } else if (strcmp(argv[i], "--kangaroo-threads") == 0 && i + 1 < argc) {
+//             kangaroo_threads = atoi(argv[++i]);
         }
     }
 }
@@ -6725,18 +6725,18 @@ void parse_arguments(int argc, char** argv) {
 #include <iostream>
 #include <cstring> // For strcmp
 
-// Define the number of kangaroos and number of threads
-const int KANGAROOS_PER_THREAD = 1024;
+// // Define the number of kangaroos and number of threads
+// const int KANGAROOS_PER_THREAD = 1024;
 const int TOTAL_THREADS = 4;
-const int TOTAL_KANGAROOS = KANGAROOS_PER_THREAD * TOTAL_THREADS;
+// const int TOTAL_KANGAROOS = KANGAROOS_PER_THREAD * TOTAL_THREADS;
 
-// Random number generator for kangaroo jumps within 0.95-1.05 bits range
+// // Random number generator for kangaroo jumps within 0.95-1.05 bits range
 std::random_device rd;
 std::mt19937 gen(rd());
 std::uniform_real_distribution<> jump_dist(0.95, 1.05);
 
-// Kangaroo structure for tracking state
-struct Kangaroo {
+// // Kangaroo structure for tracking state
+// struct Kangaroo {
     Int x, y, distance;  // Position and distance
     double jump_factor;  // Random jump factor between 0.95-1.05 bits
 };
@@ -6757,68 +6757,68 @@ void set_target_key() {
     targetX = extract_x_from_pubkey(pubkey);
 }
 
-extern bool kangaroo_initialized; // Use the global variable
+// extern bool kangaroo_initialized; // Use the global variable
 
-// Function to initialize kangaroos for a thread
-void initialize_kangaroos(std::vector<Kangaroo>& kangaroos, Int& initialXValue, Int& initialYValue, int rangePower) {
-    for (int i = 0; i < KANGAROOS_PER_THREAD; ++i) {
-        Kangaroo kangaroo;
-        kangaroo.jump_factor = jump_dist(gen);
-        // Randomly initialize the kangaroo's starting position and distance
-        kangaroo.distance.Rand(rangePower);
-        kangaroo.x.Set(&initialXValue);
-        kangaroo.y.Set(&initialYValue);
-        kangaroos.push_back(kangaroo);
+// // Function to initialize kangaroos for a thread
+// void initialize_kangaroos(std::vector<Kangaroo>& kangaroos, Int& initialXValue, Int& initialYValue, int rangePower) {
+//     for (int i = 0; i < KANGAROOS_PER_THREAD; ++i) {
+//         Kangaroo kangaroo;
+//         kangaroo.jump_factor = jump_dist(gen);
+//         // Randomly initialize the kangaroo's starting position and distance
+//         kangaroo.distance.Rand(rangePower);
+//         kangaroo.x.Set(&initialXValue);
+//         kangaroo.y.Set(&initialYValue);
+//         kangaroos.push_back(kangaroo);
     }
 
-    // Set kangaroo_initialized to true after initializing the kangaroos
-    kangaroo_initialized = true;
-    printf("Kangaroos have been initialized.\n"); // Print a message confirming initialization
+//     // Set kangaroo_initialized to true after initializing the kangaroos
+//     kangaroo_initialized = true;
+//     printf("Kangaroos have been initialized.\n"); // Print a message confirming initialization
 }
 
-// Function for kangaroo jumping logic
-void kangaroo_jump(Kangaroo& kangaroo) {
+// // Function for kangaroo jumping logic
+// void kangaroo_jump(Kangaroo& kangaroo) {
     // Calculate the new position based on the jump factor
-    double factor = kangaroo.jump_factor;
+//     double factor = kangaroo.jump_factor;
     Int factorInt(static_cast<int>(factor * (1 << 24))); // Convert factor to a scaled integer
-    kangaroo.distance.Mult(&factorInt);
+//     kangaroo.distance.Mult(&factorInt);
 
-    // Update kangaroo's elliptic curve position using addition methods provided by the Int class
-    kangaroo.x.Add(&kangaroo.distance);
-    kangaroo.y.Add(&kangaroo.distance);
+//     // Update kangaroo's elliptic curve position using addition methods provided by the Int class
+//     kangaroo.x.Add(&kangaroo.distance);
+//     kangaroo.y.Add(&kangaroo.distance);
 
-    // Log kangaroo jump activity
-    std::cout << "Kangaroo jumped to new position: " << kangaroo.x.GetBase16() << "\n";
+//     // Log kangaroo jump activity
+//     std::cout << "Kangaroo jumped to new position: " << kangaroo.x.GetBase16() << "\n";
 }
 
-// Function to check if the kangaroo found the target using hexadecimal string comparison
-bool check_target_condition(const Kangaroo& kangaroo) {
+// // Function to check if the kangaroo found the target using hexadecimal string comparison
+// bool check_target_condition(const Kangaroo& kangaroo) {
     // Create non-const copies to use GetBase16()
-    Int kangaroo_x_copy = kangaroo.x;
+//     Int kangaroo_x_copy = kangaroo.x;
     Int target_x_copy = targetX;
-    const char* kangaroo_hex = kangaroo_x_copy.GetBase16();
+//     const char* kangaroo_hex = kangaroo_x_copy.GetBase16();
     const char* target_hex = target_x_copy.GetBase16();
-    return (strcmp(kangaroo_hex, target_hex) == 0); // Compare the hex string representations
+//     return (strcmp(kangaroo_hex, target_hex) == 0); // Compare the hex string representations
 }
 
-// Main kangaroo search thread function
-void kangaroo_search_thread(int thread_id, Int initialXValue, Int initialYValue, int rangePower) {
-    std::vector<Kangaroo> kangaroos;
-    initialize_kangaroos(kangaroos, initialXValue, initialYValue, rangePower);
+// // Main kangaroo search thread function
+// void kangaroo_search_thread(int thread_id, Int initialXValue, Int initialYValue, int rangePower) {
+//     std::vector<Kangaroo> kangaroos;
+//     initialize_kangaroos(kangaroos, initialXValue, initialYValue, rangePower);
     int jump_count = 0;
 
-    for (auto& kangaroo : kangaroos) {
-        kangaroo_jump(kangaroo);
+//     for (auto& kangaroo : kangaroos) {
+//         kangaroo_jump(kangaroo);
         jump_count++;
 
         // Log every 100 jumps to show progress
         if (jump_count % 100 == 0) {
-            std::cout << "Thread " << thread_id << " kangaroo has made " << jump_count << " jumps.\n";
+//             std::cout << "Thread " << thread_id << " kangaroo has made " << jump_count << " jumps.\n";
         }
 
-        // Check if kangaroo finds the target
-        if (check_target_condition(kangaroo)) {
-            std::cout << "Kangaroo in thread " << thread_id << " found a solution!\n";
+//         // Check if kangaroo finds the target
+//         if (check_target_condition(kangaroo)) {
+//             std::cout << "Kangaroo in thread " << thread_id << " found a solution!\n";
             break;
         }
     }
@@ -6828,13 +6828,13 @@ void kangaroo_search_thread(int thread_id, Int initialXValue, Int initialYValue,
 }
 
 // Integration into main function or primary loop
-void run_kangaroo_search(Int& initialXValue, Int& initialYValue, int rangePower) {
+// void run_kangaroo_search(Int& initialXValue, Int& initialYValue, int rangePower) {
     set_target_key(); // Set the target key before launching the search
     std::vector<std::thread> threads;
 
-    // Launch kangaroo search threads
+//     // Launch kangaroo search threads
     for (int i = 0; i < TOTAL_THREADS; ++i) {
-        threads.emplace_back(kangaroo_search_thread, i, initialXValue, initialYValue, rangePower);
+//         threads.emplace_back(kangaroo_search_thread, i, initialXValue, initialYValue, rangePower);
     }
 
     // Join threads back to the main process
@@ -6843,7 +6843,25 @@ void run_kangaroo_search(Int& initialXValue, Int& initialYValue, int rangePower)
     }
 
     // Summary after all threads are done
-    std::cout << "Kangaroo search completed for all threads.\n";
+//     std::cout << "Kangaroo search completed for all threads.\n";
 }
 
 // Updated keyhunt code with corrected std::cout statements
+
+// Basic kangaroo_print function
+
+#include <iostream>
+
+// Simple function to print a message every 10,000,000,000,000,000,000 steps
+void kangaroo_print() {
+    const unsigned long long print_interval = 10000000000000000000ULL;
+    unsigned long long step_count = 0;
+
+    // Iterate and print every interval
+    for (unsigned long long i = 0; i < print_interval * 2; ++i) {
+        if (i % print_interval == 0) {
+            std::cout << "Reached step: " << i << "\n";
+        }
+        step_count++;
+    }
+}
