@@ -38,9 +38,9 @@ typedef int SOCKET;
 
 #include <string>
 #include <vector>
-#include "SECPK1/SECP256k1.h"
+#include "SECP256k1.h"
 #include "HashTable.h"
-#include "SECPK1/IntGroup.h"
+#include "IntGroup.h"
 
 
 #ifdef WIN64
