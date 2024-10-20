@@ -590,7 +590,7 @@ int main(int argc, char **argv)	{
 				if(KFACTOR <= 0)	{
 					KFACTOR = 1;
 				}
-				printf("[+] K factor %i\n",KFACTOR);
+				printf("[+] K Factor %i\n",KFACTOR);
 			break;
 
 			case 'l':
