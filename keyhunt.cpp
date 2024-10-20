@@ -1834,7 +1834,7 @@ int main(int argc, char **argv)	{
 		}
 		
 		if(!FLAGREADEDFILE1 || !FLAGREADEDFILE2 || !FLAGREADEDFILE4)	{
-			printf("[+] Making checkums .. ");
+			printf("[+] Making Checksums .. ");
 			fflush(stdout);
 		}	
 		if(!FLAGREADEDFILE1)	{
