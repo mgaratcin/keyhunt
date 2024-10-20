@@ -17,7 +17,7 @@
 
 #include "Kangaroo.h"
 #include <fstream>
-#include "SECPK1/IntGroup.h"
+#include "IntGroup.h"
 #include "Timer.h"
 #include <string.h>
 #define _USE_MATH_DEFINES
