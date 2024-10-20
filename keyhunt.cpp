@@ -3969,7 +3969,7 @@ pn.y.ModAdd(&GSn[i].y);
 									salir &= bsgs_found[l];
 								}
 								if(salir)	{
-									printf("All points were found\n");
+									printf("All Points Were Found!\n");
 									exit(EXIT_FAILURE);
 								}
 							} //End if second check
