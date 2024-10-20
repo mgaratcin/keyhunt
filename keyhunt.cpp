@@ -477,6 +477,7 @@ int main(int argc, char **argv)	{
 		rseed(clock() + time(NULL) + rand()*rand());
 	}
 #endif
+	printf("[+] KangHunt, version 1.1, by mgaratcin. Prepare to Initialize Kangaroos.);
 	
 	while ((c = getopt(argc, argv, "deh6MqRSB:b:c:C:E:f:I:k:l:m:N:n:p:r:s:t:v:G:8:z:")) != -1) {
 		switch(c) {
