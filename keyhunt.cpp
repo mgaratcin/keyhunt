@@ -947,7 +947,7 @@ int main(int argc, char **argv)	{
 		if(FLAGMODE != MODE_VANITY && !FLAGREADEDFILE1)	{
 			printf("[+] Sorting data ...");
 			_sort(addressTable,N);
-			printf(" done! %" PRIu64 " values were loaded and sorted\n",N);
+			printf(" Done! %" PRIu64 " values were loaded and sorted\n",N);
 			writeFileIfNeeded(fileName);
 		}
 	}
@@ -1859,7 +1859,7 @@ int main(int argc, char **argv)	{
 			printf(".");
 		}
 		if(!FLAGREADEDFILE1 || !FLAGREADEDFILE2 || !FLAGREADEDFILE4)	{
-			printf(" done\n");
+			printf(" Done\n");
 			fflush(stdout);
 		}	
 		if(!FLAGREADEDFILE3)	{
