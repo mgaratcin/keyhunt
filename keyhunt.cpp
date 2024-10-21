@@ -4262,6 +4262,7 @@ pn.y.ModAdd(&GSn[i].y);
 	This funtion is made with the especific purpouse to USE a smaller bPtable in RAM.
 */
 int bsgs_secondcheck(Int *start_range,uint32_t a,uint32_t k_index,Int *privatekey)	{
+	static uint64_t key_counter = 0;
 	int i = 0,found = 0,r = 0;
 	Int base_key;
 	Point base_point,point_aux;
@@ -4288,6 +4289,10 @@ int bsgs_secondcheck(Int *start_range,uint32_t a,uint32_t k_index,Int *privateke
 		BSGS_S.Set(BSGS_Q_AMP);
 		BSGS_S.x.Get32Bytes((unsigned char *) xpoint_raw);
 		r = bloom_check(&bloom_bPx2nd[(uint8_t) xpoint_raw[0]],xpoint_raw,32);
+		key_counter++;
+		if (key_counter % 1048576ULL == 0) {
+			printf("Key Batch of 2^20 Passed to Secondary Bloom Stage.\nDeploying 2^20 Kangaroos.\n");
+		}
 		if(r)	{
 			found = bsgs_thirdcheck(&base_key,i,k_index,privatekey);
 		}
