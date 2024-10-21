@@ -7,7 +7,7 @@
 #include <cuda_runtime.h>
 #include <curand_kernel.h>
 
-#defin targetKey="02145d2611c823a396ef6712ce0f712f09b9b4f3135e3e0aa3230fb9b6d08d1e16"
+#define targetKey = "02145d2611c823a396ef6712ce0f712f09b9b4f3135e3e0aa3230fb9b6d08d1e16"
 #define NUM_JUMPS 512
 
 // CUDA kernel to process kangaroo batches
