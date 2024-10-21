@@ -6,6 +6,10 @@
 #include "secp256k1/Int.h"
 #include <random>
 
+#ifndef KANGAROO_BATCH_SIZE
+#define KANGAROO_BATCH_SIZE 65536
+#endif
+
 // Function to deploy kangaroos for processing the private keys in the batch
 void deploy_kangaroos(const std::vector<Int>& kangaroo_batch) {
     std::cout << "[+] Deploying kangaroos, batch size: " << kangaroo_batch.size() << std::endl;
