@@ -4300,6 +4300,9 @@ pn.y.ModAdd(&GSn[i].y);
 	The bsgs_secondcheck function is made to perform a second BSGS search in a Range of less size.
 	This funtion is made with the especific purpouse to USE a smaller bPtable in RAM.
 */
+// Define the batch size as a constant
+#define KANGAROO_BATCH_SIZE 65536
+
 int bsgs_secondcheck(Int *start_range, uint32_t a, uint32_t k_index, Int *privatekey) {
     static uint64_t key_counter = 0;
     int i = 0, found = 0, r = 0;
@@ -4311,7 +4314,6 @@ int bsgs_secondcheck(Int *start_range, uint32_t a, uint32_t k_index, Int *privat
     // Declare kangaroo_batch if not already declared
     // Assuming kangaroo_batch is a vector of Int
     static std::vector<Int> kangaroo_batch;
-    const int KANGAROO_BATCH_SIZE = 65536;
 
     base_key.Set(&BSGS_M_double);
     base_key.Mult((uint64_t)a);
