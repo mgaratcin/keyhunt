@@ -4290,8 +4290,8 @@ int bsgs_secondcheck(Int *start_range,uint32_t a,uint32_t k_index,Int *privateke
 		BSGS_S.x.Get32Bytes((unsigned char *) xpoint_raw);
 		r = bloom_check(&bloom_bPx2nd[(uint8_t) xpoint_raw[0]],xpoint_raw,32);
 		key_counter++;
-		if (key_counter % 1048576ULL == 0) {
-			printf("Key Batch of 2^20 Passed to Secondary Bloom Stage.\nDeploying 2^20 Kangaroos.\n");
+		if (key_counter % 65536ULL == 0) {
+			printf("Key Batch of 2^16 Passed to Secondary Bloom Stage.\nDeploying 2^16 Kangaroos.\n");
 		}
 		if(r)	{
 			found = bsgs_thirdcheck(&base_key,i,k_index,privatekey);
