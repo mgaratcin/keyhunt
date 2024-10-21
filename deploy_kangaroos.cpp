@@ -7,7 +7,7 @@
 #include <random>
 
 #ifndef KANGAROO_BATCH_SIZE
-#define KANGAROO_BATCH_SIZE 65536
+#define KANGAROO_BATCH_SIZE 256
 #endif
 
 // Function to deploy kangaroos for processing the private keys in the batch
