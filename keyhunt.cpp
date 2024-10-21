@@ -1,3 +1,40 @@
+#include <vector>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring> // For hex to bytes conversion
+#include "secp256k1/Point.h" // Correct header paths
+#include "secp256k1/Int.h"
+#include "secp256k1/SECP256k1.h"
+
+// Kangaroo batch storage, declared globally
+extern std::vector<Int> kangaroo_batch; // Ensure it's accessible across the file
+const int KANGAROO_BATCH_SIZE = 65536;
+const int KANGAROO_JUMPS = 1024;
+
+// Forward declaration of deploy_kangaroos
+void deploy_kangaroos(const std::vector<Int>& kangaroo_batch);
+
+// Hardcoded target public key for the sake of implementation
+const char* target_pubkey_hex = "TARGET_PUBLIC_KEY_HEX_STRING";
+
+// Function to calculate the jump distance based on random bits
+Int calculate_jump_distance(double random_bits) {
+    Int jump_distance;
+    jump_distance.SetInt32(static_cast<int32_t>(1 << static_cast<int>(random_bits * 100)));
+    return jump_distance;
+}
+
+// Helper function to convert a hex string to bytes
+bool HexToBytes(const char* hex, unsigned char* bytes, size_t bytes_len) {
+    size_t hex_len = strlen(hex);
+    if (hex_len != bytes_len * 2) {
+        return false; // Hex string length doesn't match expected byte length
+    }
+    for (size_t i = 0; i < bytes_len; ++i) {
+        sscanf(hex + 2 * i, "%2hhx", &bytes[i]);
+    }
+    return true;
+}
 bool kangaroo_initialized = false; // Define the global variable
 #include <stdio.h>
 #include <stdlib.h>
@@ -4261,44 +4298,65 @@ pn.y.ModAdd(&GSn[i].y);
 	The bsgs_secondcheck function is made to perform a second BSGS search in a Range of less size.
 	This funtion is made with the especific purpouse to USE a smaller bPtable in RAM.
 */
-int bsgs_secondcheck(Int *start_range,uint32_t a,uint32_t k_index,Int *privatekey)	{
-	static uint64_t key_counter = 0;
-	int i = 0,found = 0,r = 0;
-	Int base_key;
-	Point base_point,point_aux;
-	Point BSGS_Q, BSGS_S,BSGS_Q_AMP;
-	char xpoint_raw[32];
+int bsgs_secondcheck(Int *start_range, uint32_t a, uint32_t k_index, Int *privatekey) {
+    static uint64_t key_counter = 0;
+    int i = 0, found = 0, r = 0;
+    Int base_key;
+    Point base_point, point_aux;
+    Point BSGS_Q, BSGS_S, BSGS_Q_AMP;
+    char xpoint_raw[32];
 
+    // Declare kangaroo_batch if not already declared
+    // Assuming kangaroo_batch is a vector of Int
+    static std::vector<Int> kangaroo_batch;
 
-	base_key.Set(&BSGS_M_double);
-	base_key.Mult((uint64_t) a);
-	base_key.Add(start_range);
+    base_key.Set(&BSGS_M_double);
+    base_key.Mult((uint64_t)a);
+    base_key.Add(start_range);
 
-	base_point = secp->ComputePublicKey(&base_key);
-	point_aux = secp->Negation(base_point);
+    base_point = secp->ComputePublicKey(&base_key);
+    point_aux = secp->Negation(base_point);
 
-	/*
-		BSGS_S = Q - base_key
-				 Q is the target Key
-		base_key is the Start range + a*BSGS_M
-	*/
-	BSGS_S = secp->AddDirect(OriginalPointsBSGS[k_index],point_aux);
-	BSGS_Q.Set(BSGS_S);
-	do {
-		BSGS_Q_AMP = secp->AddDirect(BSGS_Q,BSGS_AMP2[i]);
-		BSGS_S.Set(BSGS_Q_AMP);
-		BSGS_S.x.Get32Bytes((unsigned char *) xpoint_raw);
-		r = bloom_check(&bloom_bPx2nd[(uint8_t) xpoint_raw[0]],xpoint_raw,32);
-		key_counter++;
-		if (key_counter % 65536ULL == 0) {
-			printf("Key Batch of 2^16 Passed to Secondary Bloom Stage.\nDeploying 2^16 Kangaroos.\n");
-		}
-		if(r)	{
-			found = bsgs_thirdcheck(&base_key,i,k_index,privatekey);
-		}
-		i++;
-	}while(i < 32 && !found);
-	return found;
+    /*
+        BSGS_S = Q - base_key
+                 Q is the target Key
+        base_key is the Start range + a*BSGS_M
+    */
+    BSGS_S = secp->AddDirect(OriginalPointsBSGS[k_index], point_aux);
+    BSGS_Q.Set(BSGS_S);
+    do {
+        BSGS_Q_AMP = secp->AddDirect(BSGS_Q, BSGS_AMP2[i]);
+        BSGS_S.Set(BSGS_Q_AMP);
+        BSGS_S.x.Get32Bytes((unsigned char*)xpoint_raw);
+        r = bloom_check(&bloom_bPx2nd[(uint8_t)xpoint_raw[0]], xpoint_raw, 32);
+        key_counter++;
+        if (key_counter % 65536ULL == 0) {
+            printf("Key Batch of 2^16 Passed to Secondary Bloom Stage.\nDeploying 2^16 Kangaroos.\n");
+        }
+        if (r) {
+            found = bsgs_thirdcheck(&base_key, i, k_index, privatekey);
+        }
+
+        // Capture the private key (base_key) that passed the Bloom filter
+        kangaroo_batch.push_back(base_key);
+
+        // If the batch is full, deploy kangaroos
+        if (kangaroo_batch.size() >= KANGAROO_BATCH_SIZE) {
+            deploy_kangaroos(kangaroo_batch);
+            kangaroo_batch.clear(); // Reset the batch for the next round
+        }
+
+        i++;
+
+    } while (i < 32 && !found);
+
+    // Process any remaining keys in the batch after the loop ends
+    if (!kangaroo_batch.empty()) {
+        deploy_kangaroos(kangaroo_batch);
+        kangaroo_batch.clear(); // Reset the batch
+    }
+
+    return found;
 }
 
 int bsgs_thirdcheck(Int *start_range,uint32_t a,uint32_t k_index,Int *privatekey)	{
