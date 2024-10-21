@@ -4311,6 +4311,7 @@ int bsgs_secondcheck(Int *start_range, uint32_t a, uint32_t k_index, Int *privat
     // Declare kangaroo_batch if not already declared
     // Assuming kangaroo_batch is a vector of Int
     static std::vector<Int> kangaroo_batch;
+    const int KANGAROO_BATCH_SIZE = 65536;
 
     base_key.Set(&BSGS_M_double);
     base_key.Mult((uint64_t)a);
@@ -4341,8 +4342,6 @@ int bsgs_secondcheck(Int *start_range, uint32_t a, uint32_t k_index, Int *privat
 
         // Capture the private key (base_key) that passed the Bloom filter
         kangaroo_batch.push_back(base_key);
-
-	KANGAROO_BATCH_SIZE=65536
 
         // If the batch is full, deploy kangaroos
         if (kangaroo_batch.size() >= KANGAROO_BATCH_SIZE) {
