@@ -13,6 +13,8 @@
 #define KANGAROO_BATCH_SIZE 256
 #endif
 
+#define TARGET_KEY "02145d2611c823a396ef6712ce0f712f09b9b4f3135e3e0aa3230fb9b6d08d1e16"
+
 // Define a static atomic counter for kangaroo tracking
 static std::atomic<uint64_t> kangaroo_counter{0};
 static std::mutex output_mutex; // Mutex for thread-safe output
