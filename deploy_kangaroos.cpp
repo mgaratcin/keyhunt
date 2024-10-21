@@ -12,8 +12,6 @@
 
 // Function to deploy kangaroos for processing the private keys in the batch
 void deploy_kangaroos(const std::vector<Int>& kangaroo_batch) {
-    std::cout << "[+] Deploying kangaroos, batch size: " << kangaroo_batch.size() << std::endl;
-
     Secp256K1 secp; // Initialize the SECP256K1 context using the default constructor
 
     Point target_key; // Assume target_key is defined somewhere globally or passed in
