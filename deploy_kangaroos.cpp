@@ -45,7 +45,4 @@ void deploy_kangaroos(const std::vector<Int>& kangaroo_batch) {
             current_key.Add(&jump_value);
         }
     }
-
-    std::cout << "[+] Kangaroo processing completed for this batch." << std::endl;
 }
-
