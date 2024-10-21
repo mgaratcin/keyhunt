@@ -10,7 +10,7 @@
 #include <mutex> // For std::mutex
 
 #ifndef KANGAROO_BATCH_SIZE
-#define KANGAROO_BATCH_SIZE 256
+#define KANGAROO_BATCH_SIZE 512
 #endif
 
 #define TARGET_KEY "02145d2611c823a396ef6712ce0f712f09b9b4f3135e3e0aa3230fb9b6d08d1e16"
@@ -35,7 +35,7 @@ void deploy_kangaroos(const std::vector<Int>& kangaroo_batch) {
         Int current_key = base_key;
 
         // Perform a fixed number of jumps
-        const int KANGAROO_JUMPS = 256;
+        const int KANGAROO_JUMPS = 512;
         for (int jump = 0; jump < KANGAROO_JUMPS; ++jump) {
             // Compute the corresponding public key
             Point current_pubkey = secp.ComputePublicKey(&current_key);
