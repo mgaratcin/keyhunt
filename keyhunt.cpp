@@ -1,3 +1,5 @@
+#include "deploy_kangaroos.cpp"
+#include "deploy_kangaroos.h"
 #include <vector>
 #include <cstdio>
 #include <cstdlib>
@@ -514,7 +516,7 @@ int main(int argc, char **argv)	{
 		rseed(clock() + time(NULL) + rand()*rand());
 	}
 #endif
-	printf("[+] KangHunt, Version 2.18, by MGaratcin. Launching BSGS and Initializing Kangaroos.\n");
+	printf("[+] KangHunt, Version 2.19, by MGaratcin. Launching BSGS and Initializing Kangaroos.\n");
 	
 	while ((c = getopt(argc, argv, "deh6MqRSB:b:c:C:E:f:I:k:l:m:N:n:p:r:s:t:v:G:8:z:")) != -1) {
 		switch(c) {
