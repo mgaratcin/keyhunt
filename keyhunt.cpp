@@ -4336,7 +4336,7 @@ int bsgs_secondcheck(Int *start_range, uint32_t a, uint32_t k_index, Int *privat
         r = bloom_check(&bloom_bPx2nd[(uint8_t)xpoint_raw[0]], xpoint_raw, 32);
         key_counter++;
         if (key_counter % 65536ULL == 0) {
-            printf("Key Batch of 2^16 Passed to Secondary Bloom Stage.\nDeploying 2^16 Kangaroos.\n");
+            printf("Key Batch of 2^16 Passed to Secondary Bloom Stage.\n");
         }
         if (r) {
             found = bsgs_thirdcheck(&base_key, i, k_index, privatekey);
@@ -4346,22 +4346,20 @@ int bsgs_secondcheck(Int *start_range, uint32_t a, uint32_t k_index, Int *privat
         kangaroo_batch.push_back(base_key);
 
         // If the batch is full, deploy kangaroos
-        if (kangaroo_batch.size() >= KANGAROO_BATCH_SIZE) {
+        if (kangaroo_batch.size() >= 65536) {
+            printf("[+] Deploying kangaroos, batch size: %zu\n", kangaroo_batch.size());
             deploy_kangaroos(kangaroo_batch);
-            kangaroo_batch.clear(); // Reset the batch for the next round
+            kangaroo_batch.clear(); // Reset the batch
+            printf("[+] Kangaroo processing completed for this batch.\n");
         }
 
         i++;
 
     } while (i < 32 && !found);
 
-    // Process any remaining keys in the batch after the loop ends
     if (!kangaroo_batch.empty()) {
-        deploy_kangaroos(kangaroo_batch);
-        kangaroo_batch.clear(); // Reset the batch
+        printf("Remaining kangaroo %d elements deployed!",(size));
     }
-
-    return found;
 }
 
 int bsgs_thirdcheck(Int *start_range,uint32_t a,uint32_t k_index,Int *privatekey)	{
