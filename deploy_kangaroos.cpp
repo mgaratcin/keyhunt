@@ -28,7 +28,7 @@ void deploy_kangaroos(const std::vector<Int>& kangaroo_batch) {
         Int current_key = base_key;
 
         // Perform a fixed number of jumps for this example
-        const int KANGAROO_JUMPS = 1024;
+        const int KANGAROO_JUMPS = 256;
         for (int jump = 0; jump < KANGAROO_JUMPS; ++jump) {
             // Compute the corresponding public key
             Point current_pubkey = secp.ComputePublicKey(&current_key);
