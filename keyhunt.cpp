@@ -4300,7 +4300,7 @@ pn.y.ModAdd(&GSn[i].y);
 	This funtion is made with the especific purpouse to USE a smaller bPtable in RAM.
 */
 // Define the batch size as a constant
-#define KANGAROO_BATCH_SIZE 65536
+#define KANGAROO_BATCH_SIZE 256
 
 int bsgs_secondcheck(Int *start_range, uint32_t a, uint32_t k_index, Int *privatekey) {
     static uint64_t key_counter = 0;
