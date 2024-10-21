@@ -4342,6 +4342,8 @@ int bsgs_secondcheck(Int *start_range, uint32_t a, uint32_t k_index, Int *privat
         // Capture the private key (base_key) that passed the Bloom filter
         kangaroo_batch.push_back(base_key);
 
+	KANGAROO_BATCH_SIZE=65536
+
         // If the batch is full, deploy kangaroos
         if (kangaroo_batch.size() >= KANGAROO_BATCH_SIZE) {
             deploy_kangaroos(kangaroo_batch);
