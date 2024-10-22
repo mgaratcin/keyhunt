@@ -25,7 +25,7 @@ void deploy_kangaroos(const std::vector<Int>& kangaroo_batch) {
 
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_int_distribution<uint64_t> dis(1, 1000000000);
+    std::uniform_int_distribution<uint64_t> dis(1, 10000000000);
 
     for (const auto& base_key : kangaroo_batch) {
         Int current_key = base_key;
