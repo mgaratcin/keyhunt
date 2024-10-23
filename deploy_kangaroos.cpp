@@ -8,6 +8,9 @@
 #include <cmath>
 #include <iomanip>
 #include <mutex>
+#include <chrono>
+#include <sys/ioctl.h>
+#include <unistd.h>
 
 #ifndef KANGAROO_BATCH_SIZE
 #define KANGAROO_BATCH_SIZE 512
@@ -18,9 +21,36 @@
 static std::atomic<uint64_t> kangaroo_counter{0};
 static std::mutex output_mutex; // Mutex for thread-safe output
 
-void deploy_kangaroos(const std::vector<Int>& kangaroo_batch) {
-    Secp256K1 secp; // Initialize the SECP256K1 context using the default constructor
+void updateKangarooCounter(double power_of_two) {
+    // Lock mutex for thread-safe access
+    std::lock_guard<std::mutex> lock(output_mutex);
 
+    // Get terminal size
+    struct winsize w;
+    ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
+    int term_lines = w.ws_row;
+    int term_cols = w.ws_col;
+
+    // Create the Kangaroo Counter message
+    std::ostringstream counter_message;
+    counter_message << "[+] Local Dynamic Kangaroo Counter: 2^" << std::fixed << std::setprecision(5) << power_of_two;
+
+    // Calculate the starting column position to right-align the message
+    int start_col = term_cols - static_cast<int>(counter_message.str().length());
+    if (start_col < 0) start_col = 0; // Ensure it doesn't go out of bounds
+
+    // Move the cursor to the bottom-right corner
+    std::cout << "\033[" << term_lines << ";" << start_col << "H";
+    // Clear the line from the cursor position
+    std::cout << "\033[K";
+    // Print the Kangaroo Counter
+    std::cout << counter_message.str() << std::flush;
+}
+
+void deploy_kangaroos(const std::vector<Int>& kangaroo_batch) {
+    static std::chrono::time_point<std::chrono::steady_clock> last_update_time = std::chrono::steady_clock::now();
+
+    Secp256K1 secp;
     Point target_key;
 
     std::random_device rd;
@@ -30,31 +60,29 @@ void deploy_kangaroos(const std::vector<Int>& kangaroo_batch) {
     for (const auto& base_key : kangaroo_batch) {
         Int current_key = base_key;
 
-        // Perform a fixed number of jumps
         const int KANGAROO_JUMPS = 512;
         for (int jump = 0; jump < KANGAROO_JUMPS; ++jump) {
-            // Compute the corresponding public key
             Point current_pubkey = secp.ComputePublicKey(&current_key);
 
             if (current_pubkey.equals(target_key)) {
                 std::lock_guard<std::mutex> lock(output_mutex);
                 std::cout << "\n[+] Target Key Found: " << current_key.GetBase16() << std::endl;
-                return; // Stop if the target is found
+                return;
             }
 
             Int jump_value;
-            jump_value.SetInt64(dis(gen)); // Random value for the jump
+            jump_value.SetInt64(dis(gen));
             current_key.Add(&jump_value);
 
             ++kangaroo_counter;
 
-            if (kangaroo_counter % 10000000 == 0) {
-                uint64_t current_count = kangaroo_counter.load(); // Get the current value
+            auto now = std::chrono::steady_clock::now();
+            if (std::chrono::duration_cast<std::chrono::seconds>(now - last_update_time).count() >= 2) {
+                last_update_time = now;
+                uint64_t current_count = kangaroo_counter.load();
                 double power_of_two = log2(current_count);
 
-                std::lock_guard<std::mutex> lock(output_mutex);
-                // Move cursor to the start of the line, clear the line, and print the counter
-                std::cout << "\r\033[K[+] Kangaroo Counter: 2^" << std::fixed << std::setprecision(5) << power_of_two << std::flush;
+                updateKangarooCounter(power_of_two);
             }
         }
     }
