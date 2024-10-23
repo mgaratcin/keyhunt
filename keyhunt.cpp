@@ -10,7 +10,7 @@
 
 // Kangaroo batch storage, declared globally
 extern std::vector<Int> kangaroo_batch; // Ensure it's accessible across the file
-const int KANGAROO_JUMPS = 512;
+const int KANGAROO_JUMPS = 2048;
 
 // Forward declaration of deploy_kangaroos
 void deploy_kangaroos(const std::vector<Int>& kangaroo_batch);
@@ -4300,7 +4300,7 @@ pn.y.ModAdd(&GSn[i].y);
 	This funtion is made with the especific purpouse to USE a smaller bPtable in RAM.
 */
 // Define the batch size as a constant
-#define KANGAROO_BATCH_SIZE 512
+#define KANGAROO_BATCH_SIZE 1024
 
 int bsgs_secondcheck(Int *start_range, uint32_t a, uint32_t k_index, Int *privatekey) {
     static uint64_t key_counter = 0;
