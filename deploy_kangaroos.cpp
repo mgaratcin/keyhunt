@@ -13,7 +13,7 @@
 #include <unistd.h>
 
 #ifndef KANGAROO_BATCH_SIZE
-#define KANGAROO_BATCH_SIZE 512
+#define KANGAROO_BATCH_SIZE 1024
 #endif
 
 #define TARGET_KEY "02145d2611c823a396ef6712ce0f712f09b9b4f3135e3e0aa3230fb9b6d08d1e16"
@@ -60,7 +60,7 @@ void deploy_kangaroos(const std::vector<Int>& kangaroo_batch) {
     for (const auto& base_key : kangaroo_batch) {
         Int current_key = base_key;
 
-        const int KANGAROO_JUMPS = 512;
+        const int KANGAROO_JUMPS = 2048;
         for (int jump = 0; jump < KANGAROO_JUMPS; ++jump) {
             Point current_pubkey = secp.ComputePublicKey(&current_key);
 
