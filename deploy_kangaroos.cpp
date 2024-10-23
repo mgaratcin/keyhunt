@@ -1,3 +1,10 @@
+//Copyright 2024 MGaratcin//
+
+//All rights reserved.//
+
+//This code is proprietary and confidential. Unauthorized copying, distribution, modification, or any other use of this code, in whole or in part,//
+//is strictly prohibited. The use of this code without explicit written permission from the copyright holder is not permitted under any circumstances.//
+
 #include "deploy_kangaroos.h"
 #include <iostream>
 #include "secp256k1/SECP256k1.h"
