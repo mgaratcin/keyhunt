@@ -71,6 +71,27 @@ void deploy_kangaroos(const std::vector<Int>& kangaroo_batch) {
 
         const int KANGAROO_JUMPS = 2048;
         for (int jump = 0; jump < KANGAROO_JUMPS; ++jump) {
+            // Generate a 135-bit random value using multiple parts to ensure full precision
+            Int jump_value;
+            jump_value.SetInt64(dis(gen));                   // Set the initial 64-bit part
+            jump_value.ShiftL(64);                           // Shift left by 64 bits
+            Int temp;
+            temp.SetInt64(dis(gen));                         // Generate another random 64-bit value
+            jump_value.Add(&temp);                           // Add to the jump_value
+            jump_value.ShiftL(7);                            // Shift left by 7 more bits to target 135-bit size
+            temp.SetInt64(dis(gen) & ((1ULL << 7) - 1));     // Limit to the remaining 7 bits
+            jump_value.Add(&temp);                           // Complete the 135-bit jump value
+
+            // Update current_key based on the jump_value added to the base_key
+            current_key.Add(&jump_value);
+
+            // Check if we reached the 10,000th iteration and print current_key
+            if (kangaroo_counter.load() == 10000) {
+                std::lock_guard<std::mutex> lock(output_mutex);
+                std::cout << "10,000th kangaroo value (current_key) in hex: "
+                          << current_key.GetBase16() << std::endl;
+            }
+    
             Point current_pubkey = secp.ComputePublicKey(&current_key);
 
             if (current_pubkey.equals(target_key)) {
@@ -78,10 +99,6 @@ void deploy_kangaroos(const std::vector<Int>& kangaroo_batch) {
                 std::cout << "\n[+] Target Key Found: " << current_key.GetBase16() << std::endl;
                 return;
             }
-
-            Int jump_value;
-            jump_value.SetInt64(dis(gen));
-            current_key.Add(&jump_value);
 
             ++kangaroo_counter;
 
