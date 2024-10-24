@@ -84,14 +84,7 @@ void deploy_kangaroos(const std::vector<Int>& kangaroo_batch) {
 
             // Update current_key based on the jump_value added to the base_key
             current_key.Add(&jump_value);
-
-            // Check if we reached the 10,000th iteration and print current_key
-            if (kangaroo_counter.load() == 10000) {
-                std::lock_guard<std::mutex> lock(output_mutex);
-                std::cout << "10,000th kangaroo value (current_key) in hex: "
-                          << current_key.GetBase16() << std::endl;
-            }
-    
+   
             Point current_pubkey = secp.ComputePublicKey(&current_key);
 
             if (current_pubkey.equals(target_key)) {
