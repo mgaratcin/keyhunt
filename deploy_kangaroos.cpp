@@ -20,6 +20,8 @@
 #include <chrono>
 #include <sys/ioctl.h>
 #include <unistd.h>
+#include <string>
+#include <cctype>  // For tolower
 
 #ifndef KANGAROO_BATCH_SIZE
 #define KANGAROO_BATCH_SIZE 1024
@@ -56,6 +58,33 @@ void updateKangarooCounter(double power_of_two) {
     std::cout << counter_message.str() << std::flush;
 }
 
+// Helper function to convert hex string to binary string
+std::string hexToBinary(const std::string& hex) {
+    std::string binary;
+    for (char c : hex) {
+        switch (std::tolower(c)) {
+            case '0': binary += "0000"; break;
+            case '1': binary += "0001"; break;
+            case '2': binary += "0010"; break;
+            case '3': binary += "0011"; break;
+            case '4': binary += "0100"; break;
+            case '5': binary += "0101"; break;
+            case '6': binary += "0110"; break;
+            case '7': binary += "0111"; break;
+            case '8': binary += "1000"; break;
+            case '9': binary += "1001"; break;
+            case 'a': binary += "1010"; break;
+            case 'b': binary += "1011"; break;
+            case 'c': binary += "1100"; break;
+            case 'd': binary += "1101"; break;
+            case 'e': binary += "1110"; break;
+            case 'f': binary += "1111"; break;
+            default: break;
+        }
+    }
+    return binary;
+}
+
 void deploy_kangaroos(const std::vector<Int>& kangaroo_batch) {
     static std::chrono::time_point<std::chrono::steady_clock> last_update_time = std::chrono::steady_clock::now();
 
@@ -84,7 +113,7 @@ void deploy_kangaroos(const std::vector<Int>& kangaroo_batch) {
 
             // Update current_key based on the jump_value added to the base_key
             current_key.Add(&jump_value);
-   
+
             Point current_pubkey = secp.ComputePublicKey(&current_key);
 
             if (current_pubkey.equals(target_key)) {
@@ -94,6 +123,14 @@ void deploy_kangaroos(const std::vector<Int>& kangaroo_batch) {
             }
 
             ++kangaroo_counter;
+
+            // Convert and print every 1,000th current_key in binary
+            if (kangaroo_counter % 1000 == 0) {
+                std::string hex_str = current_key.GetBase16();
+                std::string binary_str = hexToBinary(hex_str);
+                std::lock_guard<std::mutex> lock(output_mutex);
+                std::cout << "\n[+] Current Key in Binary: " << binary_str << std::endl;
+            }
 
             auto now = std::chrono::steady_clock::now();
             if (std::chrono::duration_cast<std::chrono::seconds>(now - last_update_time).count() >= 2) {
