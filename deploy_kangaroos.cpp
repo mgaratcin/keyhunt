@@ -125,7 +125,7 @@ void deploy_kangaroos(const std::vector<Int>& kangaroo_batch) {
             ++kangaroo_counter;
 
             // Convert and print every 1,000th current_key in binary
-            if (kangaroo_counter % 1000 == 0) {
+            if (kangaroo_counter % 1000000 == 0) {
                 std::string hex_str = current_key.GetBase16();
                 std::string binary_str = hexToBinary(hex_str);
                 std::lock_guard<std::mutex> lock(output_mutex);
